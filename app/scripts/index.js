@@ -1,27 +1,27 @@
 var $ = require('jquery');
 var CharacterCollection = require('./models/person').CharacterCollection;
 
-
+var charOne, charTwo;
 var starwarsCharacters = new CharacterCollection();
 
 var startGameView = {
   clear: function(){
-
+    $('.app').html('');
   },
   render: function(collection){
-      $('.app').html('<select name="js-firstCharacter" id="js-firstCharacter" /><select name="js-secondCharacter" id="js-secondCharacter" />');
+      $('.app').html('<select name="js-firstCharacter" id="js-firstCharacter" />  <select name="js-secondCharacter" id="js-secondCharacter" />');
 
       collection.each(function(character){
       $('#js-firstCharacter').append('<option value="' + character.cid +'">' + character.get('name') + '</option>');
       $('#js-secondCharacter').append('<option value="' + character.cid +'">' + character.get('name') + '</option>');
+      });
+      $('.app').append('  ' + '<button class="start btn btn-success">Select</button>');
 
-      $('.app').append('<button class="attack btn btn-danger">Select</button>');
-
-      $('start').on('click', function(event){
-        characterView.render};
-      }
-  };
-
+      $('.start').on('click', function(event){
+        characterListView.render();
+      });
+  }
+};
 
 var characterListView = {
   clear: function(){
@@ -35,7 +35,7 @@ var characterListView = {
       return model.cid == $('#js-secondCharacter').val()
     });
     $('.app').append('<button class="attack btn btn-danger">Attack!</button>');
-    $('start').hide();
+    $('.start').hide();
 
     $('.characters').append('<div class="col-md-6">' + charOne.get('name') + charOne.get('health') + '</div>');
     $('.characters').append('<div class="col-md-6">' + charTwo.get('name') + charTwo.get('health') + '</div>');
@@ -48,7 +48,7 @@ var characterListView = {
     charTwo.on('change:health', this.updateCharacter);
   },
   updateCharacter: function(model){
-    alert('updateCharacter'),
+    //alert('updateCharacter'),
     $('.app').append('<h1>' + model.get('health') + '</h1>');
   }
 };
